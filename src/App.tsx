@@ -6,7 +6,7 @@ function App() {
   const remoteVideoRef = useRef<HTMLVideoElement>(null)
   const pc = useRef<RTCPeerConnection>()
   const localStreamRef = useRef<MediaStream>()
-  const wsRef = useRef(new WebSocket('ws://127.0.0.1:1234'))
+  const wsRef = useRef(new WebSocket('wss://ws.zzfzzf.com'))
   const username = (Math.random() + 1).toString(36).substring(7)
   const [status, setStatus] = useState('开始通话')
 
@@ -24,7 +24,7 @@ function App() {
   }
 
   const wsOnMessage = (e: MessageEvent) => {
-    const wsData = JSON.parse(e.data)
+    const wsData = JSON.parse(e.data);
     console.log('wsData', wsData)
 
     const wsUsername = wsData['username']
@@ -65,7 +65,7 @@ function App() {
   const getMediaDevices = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
-      audio: false,
+      audio: true,
     })
     console.log('stream', stream)
     localVideoRef.current!.srcObject = stream
